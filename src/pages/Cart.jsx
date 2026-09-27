@@ -1,34 +1,41 @@
-import CartItem from '../components/CartItem'
+import CartItem from "../components/CartItem";
 
-function Cart({ cartItems, onRemove, onIncrease, onDecrease }) {
-  const total = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+const Cart = ({ cartItems, onRemove }) => {
+
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.price,
     0
-  )
+  );
 
   return (
-    <div>
-      <h1>Your Cart</h1>
+    <div className="cart-page">
+
+      <h1>Shopping Cart</h1>
 
       {cartItems.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
-        <div>
-          {cartItems.map((item) => (
-            <CartItem
-              key={item.id}
-              item={item}
-              onRemove={onRemove}
-              onIncrease={onIncrease}
-              onDecrease={onDecrease}
-            />
-          ))}
+        <>
+          <p>You have {cartItems.length} item(s) in your cart.</p>
 
-          <h2>Total: Rs. {total}</h2>
-        </div>
+          <div className="cart-items">
+            {cartItems.map((item) => (
+              <CartItem
+                key={item.id}
+                item={item}
+                onRemove={onRemove}
+              />
+            ))}
+          </div>
+
+          <div className="cart-total">
+            <h2>Total: Rs. {totalPrice}</h2>
+          </div>
+        </>
       )}
-    </div>
-  )
-}
 
-export default Cart
+    </div>
+  );
+};
+
+export default Cart;

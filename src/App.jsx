@@ -1,68 +1,37 @@
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import Home from './pages/Home'
-import Cart from './pages/Cart'
+import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Cart from "./pages/Cart";
+
+import "./App.css";
 
 function App() {
-  const [cartItems, setCartItems] = useState([])
+  const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (product) => {
-    setCartItems((currentItems) => {
-      const existingItem = currentItems.find(
-        (item) => item.id === product.id
-      )
-
-      if (existingItem) {
-        return currentItems.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        )
-      }
-
-      return [...currentItems, { ...product, quantity: 1 }]
-    })
-  }
+    setCartItems((prevItems) => [...prevItems, product]);
+  };
 
   const removeFromCart = (productId) => {
-    setCartItems((currentItems) =>
-      currentItems.filter((item) => item.id !== productId)
-    )
-  }
-
-  // Increase quantity
-  const increaseQuantity = (productId) => {
-    setCartItems((currentItems) =>
-      currentItems.map((item) =>
-        item.id === productId
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
-    )
-  }
-
-  // Decrease quantity
-  const decreaseQuantity = (productId) => {
-    setCartItems((currentItems) =>
-      currentItems
-        .map((item) =>
-          item.id === productId
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
-        )
-        .filter((item) => item.quantity > 0)
-    )
-  }
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.id !== productId)
+    );
+  };
 
   return (
     <BrowserRouter>
-      <Navbar cartCount={cartItems.length} />
+      <Navbar cartItems={cartItems} />
 
       <Routes>
         <Route
           path="/"
-          element={<Home onAddToCart={addToCart} />}
+          element={
+            <Home
+              onAddToCart={addToCart}
+            />
+          }
         />
 
         <Route
@@ -71,14 +40,12 @@ function App() {
             <Cart
               cartItems={cartItems}
               onRemove={removeFromCart}
-              onIncrease={increaseQuantity}
-              onDecrease={decreaseQuantity}
             />
           }
         />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

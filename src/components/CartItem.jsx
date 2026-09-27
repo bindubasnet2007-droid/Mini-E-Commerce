@@ -1,38 +1,25 @@
-function CartItem({ item, onRemove, onIncrease, onDecrease }) {
+const CartItem = ({ item, onRemove }) => {
   return (
     <div className="cart-item">
+
       <img
         src={item.image}
-        alt={item.title}
+        alt={item.name}
+        className="cart-item-image"
       />
 
       <div>
-        <h3>{item.title}</h3>
-
-        <p>Rs. {item.price}</p>
-
-        <div>
-          <button onClick={() => onDecrease(item.id)}>
-            -
-          </button>
-
-          <span> {item.quantity} </span>
-
-          <button onClick={() => onIncrease(item.id)}>
-            +
-          </button>
-        </div>
-
-        <p>
-          Subtotal: Rs. {item.price * item.quantity}
-        </p>
-
-        <button onClick={() => onRemove(item.id)}>
-          Remove
-        </button>
+        <h3>{item.name}</h3>
+        <p>Category: {item.category}</p>
+        <p>Price: Rs. {item.price}</p>
       </div>
-    </div>
-  )
-}
 
-export default CartItem
+      <button onClick={() => onRemove(item.id)}>
+        Remove
+      </button>
+
+    </div>
+  );
+};
+
+export default CartItem;
