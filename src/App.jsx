@@ -45,7 +45,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar cartItems={cartItems} />
+      <Navbar cartCount={cartItems.length} />
 
       <Routes>
         <Route
