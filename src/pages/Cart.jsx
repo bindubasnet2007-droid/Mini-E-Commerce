@@ -1,9 +1,9 @@
 import CartItem from "../components/CartItem";
 
-const Cart = ({ cartItems, onRemove }) => {
+const Cart = ({ cartItems, onRemove, onIncrease, onDecrease }) => {
 
   const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price,
+    (total, item) => total + item.price * (item.quantity || 1),
     0
   );
 
@@ -19,11 +19,13 @@ const Cart = ({ cartItems, onRemove }) => {
           <p>You have {cartItems.length} item(s) in your cart.</p>
 
           <div className="cart-items">
-            {cartItems.map((item) => (
+            {cartItems.map((item, index) => (
               <CartItem
-                key={item.id}
+                key={`${item.id}-${index}`}
                 item={item}
                 onRemove={onRemove}
+                onIncrease={onIncrease}
+                onDecrease={onDecrease}
               />
             ))}
           </div>
